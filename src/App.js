@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, Button, createTheme, Fab, Stack, ThemeProvider } from "@mui/material";
+import { Settings} from "@mui/icons-material";
+import { theme } from "./theme";
+import Navbar from "./components/Navbar";
+import SideBar from "./components/SideBar";
+import Feed from "./components/Feed";
+import RightBar from "./components/RightBar";
+import Add from "./components/Add";
+import { useState } from "react";
+
+
 
 function App() {
+  const [mode,setMode]=useState('light');
+
+  const darkTheme= createTheme({
+  palette:{
+    mode:mode
+  } 
+})
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ThemeProvider theme={darkTheme}>
+          <Box bgcolor='background.default' color='text.primary'>
+            <Navbar/>
+                <Stack direction='row' spacing={1} justifyContent='space-between'>
+                    <SideBar  mode={mode} setMode={setMode}/>
+                    <Feed/>
+                    <RightBar/>
+                </Stack>
+              <Add/>   
+          </Box>
+      </ThemeProvider>
   );
 }
 
 export default App;
+{/*
+      <ThemeProvider theme={theme}>
+        <Button color='otherColor' variant="contained" startIcon={<Settings/>}>butao</Button>
+        <Button variant='contained' disabled>Custom button</Button>    
+      </ThemeProvider>
+      <Fab color='primary' aria-label="add">
+        <Add/>
+      </Fab>*/
+    }
